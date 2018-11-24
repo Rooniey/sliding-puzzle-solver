@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataContract.Helpers;
 
 namespace DataContract.Model
 {
@@ -9,11 +8,11 @@ namespace DataContract.Model
         public byte DimensionX { get; }
         public byte DimensionY { get; }
         public byte[] State { get; }
-        public string Path { get; }
+        public List<MoveDirection> Path { get; }
+        public int PathLength { get; }
         public MoveDirection LastMove { get; }
+        public int ZeroIndex { get; }
 
-        // TODO Check if parent is necessary
-        public PuzzleState Parent { get; }
 
         #region CONSTRUCTORS
 
@@ -23,23 +22,25 @@ namespace DataContract.Model
             DimensionY = dimensionY;
             State = state ?? throw new ArgumentNullException(nameof(state));
             LastMove = MoveDirection.None;
-            Path = string.Empty;
+            Path = new List<MoveDirection>();
+            PathLength = 0;
+            ZeroIndex = GetZeroIndex();
         }
 
-        private PuzzleState(byte dimensionX, byte dimensionY, byte[] newState, MoveDirection lastMove, PuzzleState prev)
+        private PuzzleState(byte dimensionX, byte dimensionY, byte[] newState, MoveDirection lastMove, List<MoveDirection> prevPath)
         {
             DimensionX = dimensionX;
             DimensionY = dimensionY;
             State = newState;
             LastMove = lastMove;
-
-            Path = prev.Path + lastMove.ToShortString();
-            Parent = prev;
+            Path = new List<MoveDirection>(prevPath) {lastMove};
+            PathLength = Path.Count;
+            ZeroIndex = GetZeroIndex();
         }
 
         #endregion
 
-        public int GetZeroIndex()
+        private int GetZeroIndex()
         {
             var index = 0;
             foreach (var item in State)
@@ -78,55 +79,40 @@ namespace DataContract.Model
                 possibleMoves.Add(MoveDirection.Down);
 
             return possibleMoves;
-
-//            if (zeroIndex == 0) return "RD";
-//            if (zeroIndex == DimensionX - 1) return "LD";
-//            if (zeroIndex == DimensionX * (DimensionY - 1) - 1) return "UR";
-//            if (zeroIndex == State.Length - 1) return "LU";
-//            
-//            if (zeroIndex < DimensionX && zeroIndex > 0) return "LRD";
-//            if (zeroIndex % DimensionX == 0 && zeroIndex != 0 && zeroIndex != DimensionX * (DimensionY - 1) - 1) return "URD";
-//            var revLen = State.Length - zeroIndex;
-//            if (revLen % DimensionX == 0 && revLen != 0 && revLen != DimensionX * (DimensionY - 1) - 1) return "LUD";
-//            if (revLen < DimensionX && revLen > 0) return "LUR";
-//
-//            return "LURD";
         }
 
         public PuzzleState Move(MoveDirection direction)
         {
-            var zeroIndex = GetZeroIndex();
-
             byte[] childBytes = new byte[State.Length];
             Array.Copy(State, childBytes, State.Length);
 
             switch (direction)
             {
                 case MoveDirection.Left:
-                    childBytes[zeroIndex] = childBytes[zeroIndex - 1];
-                    childBytes[zeroIndex - 1] = 0;
+                    childBytes[ZeroIndex] = childBytes[ZeroIndex - 1];
+                    childBytes[ZeroIndex - 1] = 0;
                     break;
 
                 case MoveDirection.Up:
-                    childBytes[zeroIndex] = childBytes[zeroIndex - DimensionX];
-                    childBytes[zeroIndex - DimensionX] = 0;
+                    childBytes[ZeroIndex] = childBytes[ZeroIndex - DimensionX];
+                    childBytes[ZeroIndex - DimensionX] = 0;
                     break;
 
                 case MoveDirection.Right:
-                    childBytes[zeroIndex] = childBytes[zeroIndex + 1];
-                    childBytes[zeroIndex + 1] = 0;
+                    childBytes[ZeroIndex] = childBytes[ZeroIndex + 1];
+                    childBytes[ZeroIndex + 1] = 0;
                     break; 
 
                 case MoveDirection.Down:
-                    childBytes[zeroIndex] = childBytes[zeroIndex + DimensionX];
-                    childBytes[zeroIndex + DimensionX] = 0;
+                    childBytes[ZeroIndex] = childBytes[ZeroIndex + DimensionX];
+                    childBytes[ZeroIndex + DimensionX] = 0;
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException("The passed action is invalid");
             }
 
-            return new PuzzleState(this.DimensionX, this.DimensionY, childBytes, direction, this);
+            return new PuzzleState(this.DimensionX, this.DimensionY, childBytes, direction, this.Path);
         }
     }
 }

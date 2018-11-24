@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5B4CB39D-CD55-4762-BD39-966484604CF7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SiseAssignment</RootNamespace>
-    <AssemblyName>SiseAssignment</AssemblyName>
+    <ProjectGuid>{3C5D12B4-BED2-4C4D-9B31-E8826715786E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FifteenConsole</RootNamespace>
+    <AssemblyName>FifteenConsole</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,18 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseAlgorithm.cs" />
-    <Compile Include="Base\IHeuristic.cs" />
-    <Compile Include="Helpers\PriorityComparer.cs" />
-    <Compile Include="Implementations\AStarAlgorithm.cs" />
-    <Compile Include="Implementations\BfsAlgorithm.cs" />
-    <Compile Include="Implementations\DfsAlgorithm.cs" />
-    <Compile Include="Exception\PuzzleSolvingException.cs" />
-    <Compile Include="Base\IPuzzleSolver.cs" />
-    <Compile Include="Implementations\HammingsHeuristic.cs" />
-    <Compile Include="Implementations\ManhattanHeuristic.cs" />
+    <Compile Include="AlgorithmFactory.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\PuzzleStateComparer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataContract\DataContract.csproj">
@@ -62,6 +59,10 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{8A37723A-E8B9-4053-A594-28DBCF71AA09}</Project>
       <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SiseAssignment\SiseAssignment.csproj">
+      <Project>{5b4cb39d-cd55-4762-bd39-966484604cf7}</Project>
+      <Name>SiseAssignment</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,22 +10,22 @@ using SiseAssignment.Implementations;
 namespace SiseTests
 {
     [TestClass]
-    public class BFSTests
+    public class DFSTests
     {
-        private BfsAlgorithm _bfsSolver;
+        private DfsAlgorithm _dfsSolver;
 
         private readonly MoveDirection[] _priority = new MoveDirection[]
         {
-            MoveDirection.Left,
-            MoveDirection.Up,
             MoveDirection.Right,
+            MoveDirection.Up,
+            MoveDirection.Left,
             MoveDirection.Down
         };
 
         [TestInitialize]
         public void SetUp()
         {
-            _bfsSolver = new BfsAlgorithm(_priority);
+            _dfsSolver = new DfsAlgorithm(_priority, 20);
         }
 
         [TestMethod]
@@ -36,9 +36,9 @@ namespace SiseTests
                 dimensionY: 4,
                 state: new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15});
 
-            SolvingProcessData result = _bfsSolver.SolvePuzzle(initState);
+            SolvingProcessData result = _dfsSolver.SolvePuzzle(initState);
 
-            result.Solution.Should().BeEquivalentTo(new List<MoveDirection>(){MoveDirection.Right});
+            result.Solution.Should().BeEquivalentTo(new List<MoveDirection>() {MoveDirection.Right});
         }
     }
 }
