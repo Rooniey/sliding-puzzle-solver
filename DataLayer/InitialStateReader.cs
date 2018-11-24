@@ -9,26 +9,23 @@ namespace DataLayer
     {
         public static PuzzleState ReadStateFromFile(string path)
         {
-            PuzzleState state = new PuzzleState();
             using (StreamReader sr = new StreamReader(path))
             {
                 var dimensions = sr.ReadLine().Split(' ', '\r', '\n');
-                state.DimensionY = byte.Parse(dimensions[0]);
-                state.DimensionX = byte.Parse(dimensions[1]);
+                byte x = byte.Parse(dimensions[0]);
+                byte y = byte.Parse(dimensions[1]);
 
                 var stateValues = new List<byte>();
 
-                for (int i = 0; i < state.DimensionX; i++)
+                for (int i = 0; i < x; i++)
                 {
                     stateValues.AddRange(
                         sr.ReadLine().Split(' ').Where(elem => elem != "\r" && elem !="\n").Select(byte.Parse)
                     );
                 }
 
-                state.State = stateValues.ToArray();
+                return new PuzzleState(x, y, stateValues.ToArray());
             }
-
-            return state;
         }
     }
 }

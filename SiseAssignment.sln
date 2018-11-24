@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContract", "DataContrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{8A37723A-E8B9-4053-A594-28DBCF71AA09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiseTests", "SiseTests\SiseTests.csproj", "{E8B3312F-16A9-4F4A-8E4C-A9D56CB61B68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8A37723A-E8B9-4053-A594-28DBCF71AA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A37723A-E8B9-4053-A594-28DBCF71AA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A37723A-E8B9-4053-A594-28DBCF71AA09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B3312F-16A9-4F4A-8E4C-A9D56CB61B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B3312F-16A9-4F4A-8E4C-A9D56CB61B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B3312F-16A9-4F4A-8E4C-A9D56CB61B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B3312F-16A9-4F4A-8E4C-A9D56CB61B68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
