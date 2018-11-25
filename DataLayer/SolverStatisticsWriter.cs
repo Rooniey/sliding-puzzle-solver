@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 using DataContract;
-using DataContract.Helpers;
+using DataContract.Extensions;
 using DataContract.Model;
 
 namespace DataLayer

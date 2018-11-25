@@ -33,7 +33,7 @@ namespace SiseAssignment.Implementations
             return StatesToProcess.Count != 0;
         }
 
-        public override PuzzleState GetNextState()
+        public override PuzzleState GetNextUnprocessedState()
         {
             while (StatesProcessed.Contains(StatesToProcess.Peek()))
             {

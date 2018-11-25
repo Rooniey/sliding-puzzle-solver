@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Linq;
-using DataContract;
 
-namespace FifteenConsole.Extensions
+namespace DataContract.Extensions
 {
     public static class StringExtensions
     {
         public static char[] PossibleMoves = new char[] {'L', 'U', 'R', 'D'};
 
-        public static MoveDirection[] GetMoveDirection(this string strategy)
+        public static MoveDirection[] GetMovePriorityArray(this string strategy)
         {
-            if(strategy.Any(m => !PossibleMoves.Contains(m))) 
-                throw new ArgumentException("Improper move priority strategy");
+
+            #region CONDITIONS
+            if (strategy.Length != PossibleMoves.Length)
+                throw new ArgumentException($"Improper length of priority strategy - {strategy}");
+
+            if (PossibleMoves.All(strategy.Contains))
+                throw new ArgumentException($"Strategy contains unknown characters - {strategy}");
+            #endregion
 
             MoveDirection[] possibleDirections = new MoveDirection[4];
 

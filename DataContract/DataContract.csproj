@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Model\PuzzleState.cs" />
     <Compile Include="Model\SolvingProcessData.cs" />
     <Compile Include="MoveDirection.cs" />

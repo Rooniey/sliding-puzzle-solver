@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using DataContract.Model;
 using DataLayer;
 using SiseAssignment.Base;
@@ -9,22 +10,25 @@ namespace FifteenConsole
     {
         static void Main(string[] args)
         {
-            string path = @"..\..\DataHandler\Data\"; //todo datahandler
+            string path = @"..\..\DataLayer\";
 
 
-            IPuzzleSolver algorithm = AlgorithmFactory.GetAlgorithm(args[0], args[1]);
+            if (args.Length == 5)
+            {
+                IPuzzleSolver algorithm = AlgorithmFactory.GetAlgorithm(args[0], args[1]);
 
-            var initialState = InitialStateReader.ReadStateFromFile(path + args[2]);
+                var initialState = InitialStateReader.ReadStateFromFile(path + args[2]);
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
 
-            SolvingProcessData stats = algorithm.SolvePuzzle(initialState);
+                SolvingProcessData stats = algorithm.SolvePuzzle(initialState);
 
-            sw.Stop();
-            
-            SolverStatisticsWriter.WriteSolutionToFile(stats.Solution, args[3]);
-            SolverStatisticsWriter.WriteStatisticsToFile(stats, sw.ElapsedMilliseconds, args[4]);
+                sw.Stop();
+
+                SolverStatisticsWriter.WriteSolutionToFile(stats.Solution, args[3]);
+                SolverStatisticsWriter.WriteStatisticsToFile(stats, sw.ElapsedMilliseconds, args[4]);
+            }       
         }
     }
 }

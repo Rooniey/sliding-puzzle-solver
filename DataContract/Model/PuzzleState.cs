@@ -63,19 +63,18 @@ namespace DataContract.Model
 
         public List<MoveDirection> PossibleMoves()
         {
-            var zeroIndex = GetZeroIndex();
             List<MoveDirection> possibleMoves = new List<MoveDirection>();
 
-            if (zeroIndex % DimensionY != DimensionY - 1 && LastMove != MoveDirection.Left)
+            if (ZeroIndex % DimensionY != DimensionY - 1 && LastMove != MoveDirection.Left)
                 possibleMoves.Add(MoveDirection.Right);
 
-            if (zeroIndex % DimensionY != 0 && LastMove != MoveDirection.Right) 
+            if (ZeroIndex % DimensionY != 0 && LastMove != MoveDirection.Right) 
                 possibleMoves.Add(MoveDirection.Left);
 
-            if ( (zeroIndex / DimensionY) != 0 && LastMove != MoveDirection.Down) 
+            if ( (ZeroIndex / DimensionY) != 0 && LastMove != MoveDirection.Down) 
                 possibleMoves.Add(MoveDirection.Up);
 
-            if ( (zeroIndex / DimensionY) != DimensionX - 1 && LastMove != MoveDirection.Up) 
+            if ( (ZeroIndex / DimensionY) != DimensionX - 1 && LastMove != MoveDirection.Up) 
                 possibleMoves.Add(MoveDirection.Down);
 
             return possibleMoves;

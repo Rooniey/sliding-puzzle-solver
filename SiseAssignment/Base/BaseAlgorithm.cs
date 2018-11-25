@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DataContract;
 using DataContract.Model;
-using SiseAssignment.Exception;
 using SiseAssignment.Helpers;
 
 namespace SiseAssignment.Base
@@ -12,7 +11,6 @@ namespace SiseAssignment.Base
         public IEqualityComparer<PuzzleState> StateComparer { get; }
         public int MaxTreeLevel { get; set; }
         public int StatesVisited { get; set; }
-
 
         protected BaseAlgorithm()
         {
@@ -28,7 +26,7 @@ namespace SiseAssignment.Base
 
             while (StatesToProcessExist())
             {
-                var processedState = GetNextState();
+                var processedState = GetNextUnprocessedState();
 
                 if (processedState.IsSolved())
                 {
@@ -55,7 +53,7 @@ namespace SiseAssignment.Base
 
         public abstract void InitializeStructures(PuzzleState initialState);
         public abstract bool StatesToProcessExist();
-        public abstract PuzzleState GetNextState();
+        public abstract PuzzleState GetNextUnprocessedState();
         public abstract void EnqueueChildStates(PuzzleState parentState, List<MoveDirection> possibleMoves);
     }
 }

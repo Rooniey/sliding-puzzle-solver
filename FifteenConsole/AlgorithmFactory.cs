@@ -1,48 +1,42 @@
-﻿using FifteenConsole.Extensions;
+﻿using System;
+using DataContract.Extensions;
 using SiseAssignment.Base;
+using SiseAssignment.Heuristics;
 using SiseAssignment.Implementations;
 
 namespace FifteenConsole
 {
-    public class AlgorithmFactory
+    public static class AlgorithmFactory
     {
+        public static readonly int MAX_RECURSION = 25;
+
         public static IPuzzleSolver GetAlgorithm(string algorithmName, string algorithmStrategy)
         {
-            int maxRecursion = 25;
-
-            IPuzzleSolver solver;
             switch (algorithmName)
             {
                 case "bfs":
                 {
-                    solver = new BfsAlgorithm(algorithmStrategy.GetMoveDirection());
-                    break;
-
+                    return new BfsAlgorithm(algorithmStrategy.GetMovePriorityArray());
                 }
                 case "dfs":
                 {
-                    solver = new DfsAlgorithm(algorithmStrategy.GetMoveDirection(), maxRecursion);
-                    break;
-
+                    return new DfsAlgorithm(algorithmStrategy.GetMovePriorityArray(), MAX_RECURSION);
                 }
                 case "astr":
                 {
                     if (algorithmStrategy == "hamm")
-                        solver = new AStarAlgorithm(new HammingsHeuristic());
-                    else
-                        solver = new AStarAlgorithm(new ManhattanHeuristic());
-                        break;
-
+                        return new AStarAlgorithm(new HammingsHeuristic());
+                    else if(algorithmStrategy == "manh")
+                        return new AStarAlgorithm(new ManhattanHeuristic());
+                    else 
+                        throw new ArgumentException($"Unknow heuristic used - {algorithmStrategy}");
                 }
                 default:
                 {
-                    solver = new BfsAlgorithm(algorithmStrategy.GetMoveDirection());
-                    break;
+                    throw new ArgumentException($"Unknow algorithm name - {algorithmName}");
                 }
 
             }
-
-            return solver;
         }
     }
 }

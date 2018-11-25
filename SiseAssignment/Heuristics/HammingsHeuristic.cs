@@ -1,7 +1,7 @@
 ﻿using DataContract.Model;
 using SiseAssignment.Base;
 
-namespace SiseAssignment.Implementations
+namespace SiseAssignment.Heuristics
 {
     public class HammingsHeuristic : IHeuristic
     {

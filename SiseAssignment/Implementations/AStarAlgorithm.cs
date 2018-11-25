@@ -9,35 +9,35 @@ namespace SiseAssignment.Implementations
 {
     public class AStarAlgorithm : BaseAlgorithm
     {
-        private readonly SortedList<int, PuzzleState> priorityList;
+        private readonly SortedList<int, PuzzleState> _priorityList;
         private readonly IHeuristic _heuristic;
 
         public AStarAlgorithm(IHeuristic heuristic)
         {
             _heuristic = heuristic;
-            priorityList = new SortedList<int, PuzzleState>(new PriorityComparer());
+            _priorityList = new SortedList<int, PuzzleState>(new PriorityComparer());
         }
 
         public override void InitializeStructures(PuzzleState initialState)
         {
-            priorityList.Add(_heuristic.CalculateHeuristic(initialState) ,initialState);
+            _priorityList.Add(_heuristic.CalculateHeuristic(initialState) ,initialState);
             StatesVisited++;
         }
 
         public override bool StatesToProcessExist()
         {
-            return priorityList.Count != 0;
+            return _priorityList.Count != 0;
         }
 
-        public override PuzzleState GetNextState()
+        public override PuzzleState GetNextUnprocessedState()
         {
-            while (StatesProcessed.Contains(priorityList[0]))
+            while (StatesProcessed.Contains(_priorityList[0]))
             {
-                priorityList.RemoveAt(0);
+                _priorityList.RemoveAt(0);
             }
 
-            PuzzleState state = priorityList[0];
-            priorityList.RemoveAt(0);
+            PuzzleState state = _priorityList[0];
+            _priorityList.RemoveAt(0);
 
             return state;
         }
@@ -54,7 +54,7 @@ namespace SiseAssignment.Implementations
                 if (StatesProcessed.Contains(child))
                     continue;
 
-                priorityList.Add(child.PathLength + _heuristic.CalculateHeuristic(child), child);
+                _priorityList.Add(child.PathLength + _heuristic.CalculateHeuristic(child), child);
             }
         }
     }

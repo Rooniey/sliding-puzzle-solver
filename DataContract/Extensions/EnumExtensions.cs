@@ -1,4 +1,4 @@
-﻿namespace DataContract.Helpers
+﻿namespace DataContract.Extensions
 {
     public static class EnumExtensions
     {

@@ -49,8 +49,8 @@
     <Compile Include="Implementations\DfsAlgorithm.cs" />
     <Compile Include="Exception\PuzzleSolvingException.cs" />
     <Compile Include="Base\IPuzzleSolver.cs" />
-    <Compile Include="Implementations\HammingsHeuristic.cs" />
-    <Compile Include="Implementations\ManhattanHeuristic.cs" />
+    <Compile Include="Heuristics\HammingsHeuristic.cs" />
+    <Compile Include="Heuristics\ManhattanHeuristic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\PuzzleStateComparer.cs" />
   </ItemGroup>

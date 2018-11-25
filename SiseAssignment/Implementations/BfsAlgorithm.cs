@@ -25,7 +25,7 @@ namespace SiseAssignment.Implementations
             StatesVisited++;
         }
 
-        public override PuzzleState GetNextState()
+        public override PuzzleState GetNextUnprocessedState()
         {
 
             while (StatesProcessed.Contains(StatesToProcess.Peek()))
