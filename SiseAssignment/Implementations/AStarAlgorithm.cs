@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DataContract;
 using DataContract.Model;
 using SiseAssignment.Base;
@@ -18,10 +17,10 @@ namespace SiseAssignment.Implementations
             _priorityList = new SortedList<int, PuzzleState>(new PriorityComparer());
         }
 
-        public override void InitializeStructures(PuzzleState initialState)
+        public override void InitializeContainers(PuzzleState initialState)
         {
             _priorityList.Add(_heuristic.CalculateHeuristic(initialState) ,initialState);
-            StatesVisited++;
+            StatesProcessed++;
         }
 
         public override bool StatesToProcessExist()
@@ -29,14 +28,14 @@ namespace SiseAssignment.Implementations
             return _priorityList.Count != 0;
         }
 
-        public override PuzzleState GetNextUnprocessedState()
+        public override PuzzleState GetNextUnvisitedState()
         {
-            while (StatesProcessed.Contains(_priorityList[0]))
+            while (StatesVisited.Contains(_priorityList.Values[0]))
             {
                 _priorityList.RemoveAt(0);
             }
 
-            PuzzleState state = _priorityList[0];
+            PuzzleState state = _priorityList.Values[0];
             _priorityList.RemoveAt(0);
 
             return state;
@@ -44,14 +43,12 @@ namespace SiseAssignment.Implementations
 
         public override void EnqueueChildStates(PuzzleState parentState, List<MoveDirection> possibleMoves)
         {
-            MaxTreeLevel = Math.Max(MaxTreeLevel, parentState.PathLength);
-
             foreach (var moveDirection in possibleMoves)
             {
-                var child = parentState.Move(moveDirection);
-                StatesVisited++;
+                PuzzleState child = parentState.Move(moveDirection);
+                StatesProcessed++;
 
-                if (StatesProcessed.Contains(child))
+                if (StatesVisited.Contains(child))
                     continue;
 
                 _priorityList.Add(child.PathLength + _heuristic.CalculateHeuristic(child), child);

@@ -22,10 +22,10 @@ namespace SiseAssignment.Implementations
             StatesToProcess = new Stack<PuzzleState>();
         }
 
-        public override void InitializeStructures(PuzzleState initialState)
+        public override void InitializeContainers(PuzzleState initialState)
         {
             StatesToProcess.Push(initialState);
-            StatesVisited++;
+            StatesProcessed++;
         }
 
         public override bool StatesToProcessExist()
@@ -33,9 +33,9 @@ namespace SiseAssignment.Implementations
             return StatesToProcess.Count != 0;
         }
 
-        public override PuzzleState GetNextUnprocessedState()
+        public override PuzzleState GetNextUnvisitedState()
         {
-            while (StatesProcessed.Contains(StatesToProcess.Peek()))
+            while (StatesVisited.Contains(StatesToProcess.Peek()))
             {
                 StatesToProcess.Pop();
             }
@@ -44,17 +44,14 @@ namespace SiseAssignment.Implementations
 
         public override void EnqueueChildStates(PuzzleState parentState, List<MoveDirection> possibleMoves)
         {
-            int currentTreeLevel = parentState.PathLength;
-            if (currentTreeLevel >= _maxDepth) return;
-
-            MaxTreeLevel = Math.Max(MaxTreeLevel, currentTreeLevel + 1);
+            if (parentState.PathLength >= _maxDepth) return;
 
             foreach (var moveDirection in _priority.Where(possibleMoves.Contains))
             {
-                var childState = parentState.Move(moveDirection);
-                StatesVisited++;
+                PuzzleState childState = parentState.Move(moveDirection);
+                StatesProcessed++;
 
-                if (StatesProcessed.Contains(childState))
+                if (StatesVisited.Contains(childState))
                     continue;
 
                 StatesToProcess.Push(childState);

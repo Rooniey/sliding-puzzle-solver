@@ -53,8 +53,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DFSTests.cs" />
-    <Compile Include="BFSTests.cs" />
+    <Compile Include="AlgorithmTests\ManhattanAStarTest.cs" />
+    <Compile Include="AlgorithmTests\HammingAStarTest.cs" />
+    <Compile Include="AlgorithmTests\DfsTest.cs" />
+    <Compile Include="AlgorithmTests\BfsTest.cs" />
     <Compile Include="HeuristicTests\HammingHeuristicTests.cs" />
     <Compile Include="HeuristicTests\ManhattanHeuristicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
