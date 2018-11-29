@@ -20,10 +20,9 @@ namespace SiseAssignment.Implementations
         public override void InitializeContainers(PuzzleState initialState)
         {
             _priorityList.Add(_heuristic.CalculateHeuristic(initialState) ,initialState);
-            StatesProcessed++;
         }
 
-        public override bool StatesToProcessExist()
+        public override bool StatesToVisitExist()
         {
             return _priorityList.Count != 0;
         }
@@ -41,7 +40,7 @@ namespace SiseAssignment.Implementations
             foreach (var moveDirection in possibleMoves)
             {
                 PuzzleState child = parentState.Move(moveDirection);
-                StatesProcessed++;
+                StatesProcessedCount++;
 
                 if (StatesVisited.Contains(child))
                     continue;

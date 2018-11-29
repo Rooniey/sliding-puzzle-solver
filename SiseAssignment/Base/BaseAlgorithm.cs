@@ -9,7 +9,9 @@ namespace SiseAssignment.Base
     public abstract class BaseAlgorithm : IPuzzleSolver
     {
         public HashSet<PuzzleState> StatesVisited { get; }
-        public int StatesProcessed { get; set; }
+        public int StatesProcessedCount { get; set; }
+        public int StatesVisitedCount { get; set; }
+
         public IEqualityComparer<PuzzleState> StateComparer { get; }
         public int MaxTreeLevel { get; set; }
 
@@ -18,20 +20,23 @@ namespace SiseAssignment.Base
             StateComparer = new PuzzleStateComparer();
             StatesVisited = new HashSet<PuzzleState>(StateComparer);
             MaxTreeLevel = 0;
-            StatesProcessed = 0;
+            StatesProcessedCount = 0;
+            StatesVisitedCount = 0;
         }
 
         public SolvingProcessData SolvePuzzle(PuzzleState initialState)
         {
             InitializeContainers(initialState);
+            StatesProcessedCount++;
 
-            while (StatesToProcessExist())
+            while (StatesToVisitExist())
             {
                 PuzzleState currentState = GetNextState();
 
-                if(StatesVisited.Contains(currentState)) continue;
+                if(ShouldSkipState(currentState)) continue;
 
                 StatesVisited.Add(currentState);
+                StatesVisitedCount++;
 
                 MaxTreeLevel = Math.Max(MaxTreeLevel, currentState.PathLength);
 
@@ -39,8 +44,8 @@ namespace SiseAssignment.Base
                 {
                     return new SolvingProcessData(
                         currentState.Path,
-                        StatesVisited.Count,
-                        StatesProcessed,
+                        StatesVisitedCount,
+                        StatesProcessedCount,
                         MaxTreeLevel);
                 }
 
@@ -51,14 +56,18 @@ namespace SiseAssignment.Base
 
             return new SolvingProcessData(
                 null,
-                StatesVisited.Count,
-                StatesProcessed,
+                StatesVisitedCount,
+                StatesProcessedCount,
                 MaxTreeLevel);
         }
 
         public abstract void InitializeContainers(PuzzleState initialState);
-        public abstract bool StatesToProcessExist();
+        public abstract bool StatesToVisitExist();
         public abstract PuzzleState GetNextState();
         public abstract void EnqueueChildStates(PuzzleState parentState, List<MoveDirection> possibleMoves);
+        public virtual bool ShouldSkipState(PuzzleState childState)
+        {
+            return StatesVisited.Contains(childState);
+        }
     }
 }

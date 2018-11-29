@@ -21,7 +21,6 @@ namespace SiseAssignment.Implementations
         public override void InitializeContainers(PuzzleState initialState)
         {
             StatesToProcess.Enqueue(initialState);
-            StatesProcessed++;
         }
 
         public override PuzzleState GetNextState()
@@ -29,7 +28,7 @@ namespace SiseAssignment.Implementations
             return StatesToProcess.Dequeue();
         }
 
-        public override bool StatesToProcessExist()
+        public override bool StatesToVisitExist()
         {
             return StatesToProcess.Count != 0;
         }
@@ -39,7 +38,7 @@ namespace SiseAssignment.Implementations
             foreach (var moveDirection in _priority.Where(possibleMoves.Contains))
             {
                 PuzzleState childState = parentState.Move(moveDirection);
-                StatesProcessed++;
+                StatesProcessedCount++;
 
                 if (StatesVisited.Contains(childState))
                     continue;

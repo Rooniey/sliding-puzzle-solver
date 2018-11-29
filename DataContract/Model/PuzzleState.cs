@@ -85,39 +85,37 @@ namespace DataContract.Model
         {
             byte[] childBytes = new byte[State.Length];
             Array.Copy(State, childBytes, State.Length);
-            int zeroIndex;
+            int newZeroIndex;
 
             switch (direction)
             {
                 case MoveDirection.Left:
-                    childBytes[ZeroIndex] = childBytes[ZeroIndex - 1];
-                    zeroIndex = ZeroIndex - 1;
-                    childBytes[zeroIndex] = 0;
+                    newZeroIndex = ZeroIndex - 1;
+                    childBytes[ZeroIndex] = childBytes[newZeroIndex];
                     break;
 
                 case MoveDirection.Up:
-                    childBytes[ZeroIndex] = childBytes[ZeroIndex - DimensionX];
-                    zeroIndex = ZeroIndex - DimensionX;
-                    childBytes[zeroIndex] = 0;
+                    newZeroIndex = ZeroIndex - DimensionX;
+                    childBytes[ZeroIndex] = childBytes[newZeroIndex];
                     break;
 
                 case MoveDirection.Right:
-                    childBytes[ZeroIndex] = childBytes[ZeroIndex + 1];
-                    zeroIndex = ZeroIndex + 1;
-                    childBytes[zeroIndex] = 0;
+                    newZeroIndex = ZeroIndex + 1;
+                    childBytes[ZeroIndex] = childBytes[newZeroIndex];
                     break; 
 
                 case MoveDirection.Down:
-                    childBytes[ZeroIndex] = childBytes[ZeroIndex + DimensionX];
-                    zeroIndex = ZeroIndex + DimensionX;
-                    childBytes[zeroIndex] = 0;
+                    newZeroIndex = ZeroIndex + DimensionX;
+                    childBytes[ZeroIndex] = childBytes[newZeroIndex];
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException("The passed action is invalid");
             }
 
-            return new PuzzleState(this, childBytes, direction, zeroIndex);
+            childBytes[newZeroIndex] = 0;
+
+            return new PuzzleState(this, childBytes, direction, newZeroIndex);
         }
     }
 }
