@@ -24,12 +24,8 @@ namespace SiseAssignment.Implementations
             StatesProcessed++;
         }
 
-        public override PuzzleState GetNextUnvisitedState()
+        public override PuzzleState GetNextState()
         {
-            while (StatesVisited.Contains(StatesToProcess.Peek()))
-            {
-                StatesToProcess.Dequeue();
-            }
             return StatesToProcess.Dequeue();
         }
 

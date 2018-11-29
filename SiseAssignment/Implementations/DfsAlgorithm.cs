@@ -33,12 +33,8 @@ namespace SiseAssignment.Implementations
             return StatesToProcess.Count != 0;
         }
 
-        public override PuzzleState GetNextUnvisitedState()
+        public override PuzzleState GetNextState()
         {
-            while (StatesVisited.Contains(StatesToProcess.Peek()))
-            {
-                StatesToProcess.Pop();
-            }
             return StatesToProcess.Pop();
         }
 

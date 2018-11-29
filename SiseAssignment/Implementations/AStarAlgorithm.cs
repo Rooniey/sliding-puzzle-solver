@@ -28,13 +28,8 @@ namespace SiseAssignment.Implementations
             return _priorityList.Count != 0;
         }
 
-        public override PuzzleState GetNextUnvisitedState()
+        public override PuzzleState GetNextState()
         {
-            while (StatesVisited.Contains(_priorityList.Values[0]))
-            {
-                _priorityList.RemoveAt(0);
-            }
-
             PuzzleState state = _priorityList.Values[0];
             _priorityList.RemoveAt(0);
 

@@ -27,24 +27,26 @@ namespace SiseAssignment.Base
 
             while (StatesToProcessExist())
             {
-                PuzzleState currentlyVisitedState = GetNextUnvisitedState();
+                PuzzleState currentState = GetNextState();
 
-                StatesVisited.Add(currentlyVisitedState);
+                if(StatesVisited.Contains(currentState)) continue;
 
-                MaxTreeLevel = Math.Max(MaxTreeLevel, currentlyVisitedState.PathLength);
+                StatesVisited.Add(currentState);
 
-                if (currentlyVisitedState.IsSolved())
+                MaxTreeLevel = Math.Max(MaxTreeLevel, currentState.PathLength);
+
+                if (currentState.IsSolved())
                 {
                     return new SolvingProcessData(
-                        currentlyVisitedState.Path,
+                        currentState.Path,
                         StatesVisited.Count,
                         StatesProcessed,
                         MaxTreeLevel);
                 }
 
-                List<MoveDirection> possibleMoves = currentlyVisitedState.PossibleMoves();
+                List<MoveDirection> possibleMoves = currentState.PossibleMoves();
 
-                EnqueueChildStates(currentlyVisitedState, possibleMoves);
+                EnqueueChildStates(currentState, possibleMoves);
             }
 
             return new SolvingProcessData(
@@ -56,7 +58,7 @@ namespace SiseAssignment.Base
 
         public abstract void InitializeContainers(PuzzleState initialState);
         public abstract bool StatesToProcessExist();
-        public abstract PuzzleState GetNextUnvisitedState();
+        public abstract PuzzleState GetNextState();
         public abstract void EnqueueChildStates(PuzzleState parentState, List<MoveDirection> possibleMoves);
     }
 }
