@@ -9,7 +9,7 @@ namespace DataLayer
     {
         public static PuzzleState ReadStateFromFile(string path)
         {
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamReader sr = new StreamReader(Path.GetFullPath(path)))
             {
                 var dimensions = sr.ReadLine().Split(' ', '\r', '\n');
                 byte x = byte.Parse(dimensions[0]);

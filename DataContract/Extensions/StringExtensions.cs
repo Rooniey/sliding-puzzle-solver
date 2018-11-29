@@ -13,9 +13,9 @@ namespace DataContract.Extensions
             #region CONDITIONS
             if (strategy.Length != PossibleMoves.Length)
                 throw new ArgumentException($"Improper length of priority strategy - {strategy}");
-
-            if (PossibleMoves.All(strategy.Contains))
-                throw new ArgumentException($"Strategy contains unknown characters - {strategy}");
+//
+//            if (PossibleMoves.All(strategy.ToCharArray().Contains))
+//                throw new ArgumentException($"Strategy contains unknown characters - {strategy}");
             #endregion
 
             MoveDirection[] possibleDirections = new MoveDirection[4];

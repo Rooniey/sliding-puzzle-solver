@@ -10,14 +10,11 @@ namespace FifteenConsole
     {
         static void Main(string[] args)
         {
-            string path = @"..\..\DataLayer\";
-
-
             if (args.Length == 5)
             {
                 IPuzzleSolver algorithm = AlgorithmFactory.GetAlgorithm(args[0], args[1]);
 
-                var initialState = InitialStateReader.ReadStateFromFile(path + args[2]);
+                var initialState = InitialStateReader.ReadStateFromFile(args[2]);
 
                 Stopwatch sw = new Stopwatch();
                 sw.Start();

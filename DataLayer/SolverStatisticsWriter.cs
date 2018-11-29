@@ -12,22 +12,20 @@ namespace DataLayer
 
         public static void WriteStatisticsToFile(SolvingProcessData statistics, long duration, string path)
         {
-            using (StreamWriter outputFile = new StreamWriter(path))
+            using (StreamWriter outputFile = new StreamWriter(Path.GetFullPath(path)))
             {
                 if (statistics.Solution != null) outputFile.WriteLine(statistics.Solution.Count);
                 else outputFile.WriteLine("-1");
                 outputFile.WriteLine(statistics.StatesVisited);
                 outputFile.WriteLine(statistics.StatesProcessed);
                 outputFile.WriteLine(statistics.MaxDepth);
-                outputFile.WriteLine(duration.ToString("F3"));
+                outputFile.WriteLine(duration.ToString());
             }
         }
 
         public static void WriteSolutionToFile(List<MoveDirection> solution, string path)
         {
-
-
-            using (StreamWriter outputFile = new StreamWriter(path))
+            using (StreamWriter outputFile = new StreamWriter(Path.GetFullPath(path)))
             {
                 if (solution == null)
                 {
@@ -35,15 +33,11 @@ namespace DataLayer
                     return;
                 }
 
-                StringBuilder sb = new StringBuilder();
-
+                outputFile.WriteLine(solution.Count);
                 foreach (var moveDirection in solution)
                 {
-                    sb.Append(moveDirection.ToShortString());
+                    outputFile.Write(moveDirection.ToShortString());
                 }
-
-                outputFile.WriteLine(sb.ToString());
-                
             }
         }
 
